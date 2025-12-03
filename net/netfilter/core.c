@@ -6,6 +6,7 @@
  *
  * This code is GPL.
  */
+#include "linux/compiler.h"
 #include <linux/kernel.h>
 #include <linux/netfilter.h>
 #include <net/protocol.h>
@@ -27,6 +28,10 @@
 #include <net/sock.h>
 
 #include "nf_internals.h"
+
+#if defined (CONFIG_MY_HOOK_NF_DEBUG)
+#include <myhook/my_hook_ext.h>
+#endif
 
 const struct nf_ipv6_ops __rcu *nf_ipv6_ops __read_mostly;
 EXPORT_SYMBOL_GPL(nf_ipv6_ops);
@@ -621,6 +626,10 @@ int nf_hook_slow(struct sk_buff *skb, struct nf_hook_state *state,
 
 	for (; s < e->num_hook_entries; s++) {
 		verdict = nf_hook_entry_hookfn(&e->hooks[s], skb, state);
+#if defined (CONFIG_MY_HOOK_NF_DEBUG)
+		if (unlikely(my_hook_nf_hook_nf_hook_slow_enable && my_hook_nf_hook_nf_hook_slow))
+			my_hook_nf_hook_nf_hook_slow(skb, state, e, s, verdict);
+#endif
 		switch (verdict & NF_VERDICT_MASK) {
 		case NF_ACCEPT:
 			break;

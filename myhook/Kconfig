@@ -1,0 +1,14 @@
+menuconfig MY_HOOK
+	bool "My Hook Debug Support"
+	help
+		My Hook Debug Support
+
+if MY_HOOK
+
+config MY_HOOK_NF_DEBUG
+    bool "netfilter debug hook"
+    default n
+    help
+		netfilter debug hook
+
+endif
