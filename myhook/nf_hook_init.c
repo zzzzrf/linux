@@ -47,5 +47,9 @@ void my_hook_nf_hook_init(my_hook_info_t *hi)
 {
 	debugfs_create_u32("debug_flags", 0644, hi->dbg_root, &my_hook_nf_hook_nf_hook_slow_enable);
 	my_hook_nf_hook_nf_hook_slow = my_hook_nf_hook_nf_hook_slow_fn;
+
+#ifdef CONFIG_MY_HOOK_CT_DEBUG
+	my_nf_ct_init(hi);
+#endif
 	return ;
 }

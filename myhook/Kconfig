@@ -11,4 +11,11 @@ config MY_HOOK_NF_DEBUG
     help
 		netfilter debug hook
 
+config MY_HOOK_CT_DEBUG
+    bool "conntrack debug"
+	select MY_HOOK_NF_DEBUG
+    default n
+    help
+		conntrack debug hook
+
 endif

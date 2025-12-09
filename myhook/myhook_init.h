@@ -9,4 +9,6 @@ typedef struct my_hook_info_t
 
 void my_hook_nf_hook_init(my_hook_info_t *hi);
 
+int my_nf_ct_init(my_hook_info_t *hi);
+
 #endif
